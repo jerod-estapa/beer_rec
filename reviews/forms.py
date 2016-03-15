@@ -1,4 +1,4 @@
-# Reviews App Forms
+# Reviews App - Forms
 
 from django.forms import ModelForm, Textarea
 from reviews.models import Review

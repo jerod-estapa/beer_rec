@@ -1,4 +1,4 @@
-# Reviews Models
+# Reviews App - Models
 
 from django.db import models
 import numpy as np

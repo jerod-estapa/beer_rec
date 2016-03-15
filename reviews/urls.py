@@ -1,4 +1,4 @@
-# Reviews App URLs
+# Reviews App - URLs
 
 from django.conf.urls import url
 
