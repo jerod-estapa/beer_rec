@@ -8,7 +8,7 @@ class Beer(models.Model):
     name = models.CharField(max_length=200)
 
     def average_rating(self):
-        all_ratings = map(lambda x: x.rating, self.review_set.all())
+        all_ratings = list(map(lambda x: x.rating, self.review_set.all()))
         return np.mean(all_ratings)
 
     def __unicode__(self):

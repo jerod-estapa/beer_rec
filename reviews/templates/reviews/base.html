@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<div>
+    <nav>
+        <div>
+            <a href="{% url 'reviews:review_list' %}" class="href">BeerBot</a>
+        </div>
+        <div id="navbar">
+            <ul>
+                <li><a href="{% url 'reviews:beer_list' %}" class="href">Beer List</a></li>
+                <li><a href="{% url 'reviews:review_list' %}" class="href">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <h1>{% block title %}(no title){% endblock %}</h1>
+
+
+    {% block content %}(no content){% endblock %}
+</div>
