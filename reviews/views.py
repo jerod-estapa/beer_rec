@@ -3,6 +3,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from .models import Review, Beer
 from .forms import ReviewForm
 import datetime
@@ -31,6 +32,7 @@ def beer_detail(request, beer_id):
     return render(request, 'reviews/beer_detail.html', {'beer': beer, 'form': form})
 
 
+@login_required
 def add_review(request, beer_id):
     beer = get_object_or_404(Beer, pk=beer_id)
     form = ReviewForm(request.POST)
