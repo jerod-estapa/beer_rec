@@ -7,8 +7,8 @@
 
 {% block bootstrap3_content %}
 
-<div class="container">
-    <nav class="navbar navbar-default">
+<div class="navbar navbar-default">
+    <nav class="container">
         <div class="navbar header">
             <a href="{% url 'reviews:review_list' %}" class="navbar-brand">BeerBot</a>
         </div>
@@ -19,8 +19,9 @@
             </ul>
         </div>
     </nav>
+</div>
 
-
+<div class="container">
     <h1>{% block title %}(no title){% endblock %}</h1>
 
     {% bootstrap_messages %}
