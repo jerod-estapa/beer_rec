@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'reviews',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -126,3 +127,10 @@ STATIC_URL = '/static/'
 # Login Redirect
 
 LOGIN_REDIRECT_URL = '/reviews/review/user'
+
+
+# Django Registration Redux
+
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
+REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in
+

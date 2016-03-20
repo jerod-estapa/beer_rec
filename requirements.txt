@@ -1,8 +1,13 @@
 beautifulsoup4==4.4.1
 Django==1.9.4
 django-bootstrap3==7.0.0
+django-registration-redux==1.4
+ecdsa==0.13
+Fabric==1.10.2
 nltk==3.2
 numpy==1.10.4
+paramiko==1.16.0
+pycrypto==2.6.1
 pytz==2015.7
 requests==2.9.1
 scikit-learn==0.17.1
