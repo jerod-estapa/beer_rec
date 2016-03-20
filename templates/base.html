@@ -10,12 +10,19 @@
 <div class="navbar navbar-default">
     <nav class="container">
         <div class="navbar header">
-            <a href="{% url 'reviews:review_list' %}" class="navbar-brand">BeerBot</a>
+            <a class="navbar-brand" href="{% url 'reviews:review_list' %}">BeerBot</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'reviews:review_list' %}" class="nav-link">Home</a></li>
                 <li><a href="{% url 'reviews:beer_list' %}">Beer List</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'auth:logout' %}">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'auth:login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
