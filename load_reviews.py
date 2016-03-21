@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" This script loads reviews from the database. """
+""" This script loads reviews from a CSV file. """
 
 import sys, os
 import pandas as pd

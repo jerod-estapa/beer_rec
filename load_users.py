@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" This script loads users from the database. """
+""" This script loads users from a CSV file. """
 
 import sys, os
 import pandas as pd

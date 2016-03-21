@@ -64,5 +64,15 @@ def user_review_list(request, username=None):
 
 @login_required
 def user_recommendation_list(request):
-    return render(request, 'reviews/user_recommendation_list.html', {'username': request.user.username})
+    # Get this user's reviews
+    user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('beer')
+    # From the reviews, get a set of beer IDs
+    user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
+    # then get a beer list excluding the previous IDs
+    user_beer_list = Beer.objects.exclude(id__in=user_reviews_beer_ids)
+    return render(
+        request,
+        'reviews/user_recommendation_list.html',
+        {'username': request.user.username, 'user_beer_list': user_beer_list}
+    )
 

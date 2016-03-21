@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" This script loads beers from the database. """
+""" This script loads beers from a CSV file. """
 
 import sys, os
 import pandas as pd
