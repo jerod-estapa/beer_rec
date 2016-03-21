@@ -4,12 +4,13 @@
 
 import sys, os
 import pandas as pd
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'beer_rec.settings')
+
 import django
+django.setup()
 
 from django.contrib.auth.models import User
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "beer_rec.settings")
-django.setup()
 
 
 def save_user_from_row(user_row):

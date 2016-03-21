@@ -4,18 +4,19 @@
 
 import sys, os
 import pandas as pd
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "beer_rec.settings")
+
 import django
+django.setup()
 
 from reviews.models import Beer
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "beer_rec.settings")
-django.setup()
-
 
 def save_beer_from_row(beer_row):
-    beer = beer()
-    beer.id = user_row[0]
-    beer.username = user_row[1]
+    beer = Beer()
+    beer.id = beer_row[0]
+    beer.username = beer_row[1]
     beer.save()
 
 

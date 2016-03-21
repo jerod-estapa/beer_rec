@@ -5,12 +5,13 @@
 import sys, os
 import pandas as pd
 import datetime
-import django
-
-from reviews.models import Review, Beer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "beer_rec.settings")
+
+import django
 django.setup()
+
+from reviews.models import Review, Beer
 
 
 def save_review_from_row(review_row):
