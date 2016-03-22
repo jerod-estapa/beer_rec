@@ -73,8 +73,13 @@ def user_recommendation_list(request):
     user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
 
     # Get request user cluster name (just the first one)
-    user_cluster_name = \
-        User.objects.get(username=request.user.username).cluster_set.first().name
+    try:
+        user_cluster_name = \
+            User.objects.get(username=request.user.username).cluster_set.first().name
+    except:
+        update_clusters()
+        user_cluster_name = \
+            User.objects.get(username=request.user.username).cluster_set.first().name
 
     # Get usernames for other members in the cluster
     user_cluster_other_members = \
