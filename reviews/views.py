@@ -3,8 +3,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import Review, Beer
+from .models import Review, Beer, Cluster
 from .forms import ReviewForm
 import datetime
 
@@ -64,15 +65,35 @@ def user_review_list(request, username=None):
 
 @login_required
 def user_recommendation_list(request):
-    # Get this user's reviews
+
+    # Get this user's reviews and a set of beer IDs
     user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('beer')
-    # From the reviews, get a set of beer IDs
     user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
-    # then get a beer list excluding the previous IDs
-    user_beer_list = Beer.objects.exclude(id__in=user_reviews_beer_ids)
+
+    # Get request user cluster name (just the first one)
+    user_cluster_name = \
+        User.objects.get(username=request.user.username).cluster_set.first().name
+
+    # Get usernames for other members in the cluster
+    user_cluster_other_members = \
+        Cluster.objects.get(name=user_cluster_name).users.exclude(request.user.username).all()
+    other_members_usernames = set(map(lambda x: x.username, user_cluster_other_members))
+
+    # Get reviews by those members, excluding beers reviewed by the request user
+    other_users_reviews = \
+        Review.objects.filter(user_name__in=other_members_usernames) \
+            .exclude(beer__id__in=user_reviews_beer_ids)
+    other_users_reviews_beer_ids = set(map(lambda x: x.beer.id, other_users_reviews))
+
+    # Then, get a beer list including the previous IDs, ordered by rating
+    user_beer_list = sorted(
+        list(Beer.objects.filter(id__in=other_users_reviews_beer_ids)),
+        key=lambda x: x.average_rating,
+        reverse=True
+    )
+
     return render(
         request,
         'reviews/user_recommendation_list.html',
         {'username': request.user.username, 'user_beer_list': user_beer_list}
     )
-
