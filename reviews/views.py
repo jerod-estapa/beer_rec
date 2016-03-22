@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Review, Beer, Cluster
 from .forms import ReviewForm
+from .suggestions import update_clusters
 import datetime
 
 
@@ -48,6 +49,7 @@ def add_review(request, beer_id):
         review.comment = comment
         review.pub_date = datetime.datetime.now()
         review.save()
+        update_clusters()
         # HttpResponseRedirect used here to prevent user
         # from posting data twice by hitting Back button
         return HttpResponseRedirect(reverse('reviews:beer_detail', args=(beer.id,)))
@@ -82,13 +84,13 @@ def user_recommendation_list(request):
     # Get reviews by those members, excluding beers reviewed by the request user
     other_users_reviews = \
         Review.objects.filter(user_name__in=other_members_usernames) \
-            .exclude(beer__id__in=user_reviews_beer_ids)
+        .exclude(beer__id__in=user_reviews_beer_ids)
     other_users_reviews_beer_ids = set(map(lambda x: x.beer.id, other_users_reviews))
 
     # Then, get a beer list including the previous IDs, ordered by rating
     user_beer_list = sorted(
         list(Beer.objects.filter(id__in=other_users_reviews_beer_ids)),
-        key=lambda x: x.average_rating,
+        key=lambda x: x.average_rating(),
         reverse=True
     )
 
