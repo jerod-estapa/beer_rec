@@ -70,7 +70,7 @@ def user_recommendation_list(request):
 
     # Get this user's reviews and a set of beer IDs
     user_reviews = Review.objects.filter(user_name=request.user.username).prefetch_related('beer')
-    user_reviews_beer_ids = set(map(lambda x: x.beer.id, user_reviews))
+    user_reviews_beer_ids = list(map(lambda x: x.beer.id, user_reviews))
 
     # Get request user cluster name (just the first one)
     try:
